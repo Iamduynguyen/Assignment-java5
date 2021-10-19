@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Dashboard 1 | Velonic - Responsive Bootstrap 4 Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Responsive bootstrap 4 admin template" name="description">
+    <meta content="Coderthemes" name="author">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets\images\favicon.ico">
+
+    <!-- Plugins css-->
+    <link th:href="@{/Admin/assets/libs/sweetalert2/sweetalert2.min.css}" rel="stylesheet" type="text/css">
+
+    <!-- App css -->
+    <link th:href="@{/Admin/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css" id="bootstrap-stylesheet">
+    <link th:href="@{/Admin/assets/css/icons.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/Admin/assets/css/app.min.css}" rel="stylesheet" type="text/css" id="app-stylesheet">
+
+</head>
+
+<body>
+
+<!-- Begin page -->
+<div id="wrapper">
+
+    <div th:replace="/Component/Admin/Navbar.html :: nav-admin"></div>
+    <!-- end Topbar --> <!-- ========== Left Sidebar Start ========== -->
+    <div th:replace="/Component/Admin/Sidebar.html :: sidebar-admin"></div>
+    <!-- Topbar Start -->
+    <div class="content-page">
+        <div class="content">
+            <div class="col-md-12 my-1">
+                <table class="table table-warning table-hover table-sm">
+                    <tr style="background-color: deeppink">
+                        <th style="color: white">STT</th>
+                        <th style="color: white">Tên sản phẩm</th>
+                        <th style="color: white">Hình ảnh</th>
+                        <th style="color: white">Giá gốc</th>
+                        <th style="color: white">Khuyến mại</th>
+                        <th style="color: white">Lượt xem</th>
+                        <th style="color: white">Lượt mua</th>
+                        <th style="background-color: greenyellow;text-align: center"><a>Tạo mới</a></th>
+                    </tr>
+                    <tbody>
+                    <tr th:each="product:${productList}">
+                        <td th:utext="${product.id}"></td>
+                        <td th:utext="${product.name}"></td>
+                        <td><img th:src="@{'http://localhost:8080/file/'+${product.image}}" height="80px"/></td>
+                        <td th:utext="${product.price}"></td>
+                        <td th:utext="${product.discount}"></td>
+                        <td th:utext="${product.view}"></td>
+                        <td th:utext="${product.sold}"></td>
+                        <td style="text-align: center">
+                            <a th:href="@{'/admin/product/save?id='+${product.id}}">
+                                <button type="button" class="bg-primary">sửa</button>
+                            </a>
+                            <a th:href="@{'/admin/product/read?delete='+${product.id}}">
+                                <button type="button" class="bg-danger">xóa</button>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <a>
+                                <button class="rounded bg-info">Prew</button>
+                            </a>
+                            <label className="page">${page}</label>
+                            <a>
+                                <button class="rounded bg-info">Prew</button>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Left Sidebar End -->
+    <!-- ============================================================== -->
+    <!-- Start Page Content here -->
+    <!-- ============================================================== -->
+
+
+    <!-- ============================================================== -->
+    <!-- End Page content -->
+    <!-- ============================================================== -->
+
+</div>
+<!-- END wrapper -->
+
+
+<!-- Right Sidebar -->
+<div class="right-bar">
+    <div class="rightbar-title">
+        <a href="javascript:void(0);" class="right-bar-toggle float-right">
+            <i class="mdi mdi-close"></i>
+        </a>
+        <h4 class="font-17 m-0 text-white">Theme Customizer</h4>
+    </div>
+    <div class="slimscroll-menu">
+
+        <div class="p-4">
+            <div class="alert alert-warning" role="alert">
+                <strong>Customize </strong> the overall color scheme, layout, etc.
+            </div>
+            <div class="mb-2">
+                <img src="assets\images\layouts\light.png" class="img-fluid img-thumbnail" alt="">
+            </div>
+            <div class="custom-control custom-switch mb-3">
+                <input type="checkbox" class="custom-control-input theme-choice" id="light-mode-switch" checked="">
+                <label class="custom-control-label" for="light-mode-switch">Light Mode</label>
+            </div>
+
+            <div class="mb-2">
+                <img src="assets\images\layouts\dark.png" class="img-fluid img-thumbnail" alt="">
+            </div>
+            <div class="custom-control custom-switch mb-3">
+                <input type="checkbox" class="custom-control-input theme-choice" id="dark-mode-switch"
+                       data-bsstyle="assets/css/bootstrap-dark.min.css" data-appstyle="assets/css/app-dark.min.css">
+                <label class="custom-control-label" for="dark-mode-switch">Dark Mode</label>
+            </div>
+
+            <div class="mb-2">
+                <img src="assets\images\layouts\rtl.png" class="img-fluid img-thumbnail" alt="">
+            </div>
+            <div class="custom-control custom-switch mb-5">
+                <input type="checkbox" class="custom-control-input theme-choice" id="rtl-mode-switch"
+                       data-appstyle="assets/css/app-rtl.min.css">
+                <label class="custom-control-label" for="rtl-mode-switch">RTL Mode</label>
+            </div>
+
+        </div>
+    </div> <!-- end slimscroll-menu-->
+</div>
+<!-- /Right-bar -->
+
+<!-- Right bar overlay-->
+<div class="rightbar-overlay"></div>
+
+<a href="javascript:void(0);" class="right-bar-toggle demos-show-btn">
+    <i class="mdi mdi-settings-outline mdi-spin"></i> &nbsp;Choose Demos
+</a>
+
+<!-- Vendor js -->
+<script th:src="@{/Admin/assets/js/vendor.min.js}"></script>
+<script th:src="@{/Admin/assets/js/app.min.js}"></script>
+<script th:src="@{/Admin/assets/libs/moment/moment.min.js}"></script>
+<script th:src="@{/Admin/assets/libs/jquery-scrollto/jquery.scrollTo.min.js}"></script>
+<script th:src="@{/Admin/assets/libs/sweetalert2/sweetalert2.min.css}"></script>
+<script th:src="@{/Admin/assets/js/pages/jquery.chat.js}"></script>
+<script th:src="@{/Admin/assets/js/pages/jquery.todo.js}"></script>
+<script th:src="@{/Admin/assets/libs/morris-js/morris.min.js}"></script>
+<script th:src="@{/Admin/assets/libs/raphael/raphael.min.js}"></script>
+<script th:src="@{/Admin/assets/libs/jquery-sparkline/jquery.sparkline.min.js}"></script>
+<script th:src="@{/Admin/assets/js/pages/dashboard.init.js}"></script>
+
+
+</body>
+</html>

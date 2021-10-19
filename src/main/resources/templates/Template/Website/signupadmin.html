@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Meta Tag -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name='copyright' content='pavilan'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Title Tag  -->
+    <title>Bizwheel - Multipurpose Business & Digital Agency Html5 Template</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/favicon.png" href="img/favicon.png">
+
+    <!-- Web Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Bizwheel Plugins CSS -->
+
+    <link rel="stylesheet" th:href="@{/Website/Css/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/Website/Css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/Website/Css/cubeportfolio.min.css}">
+    <link rel="stylesheet" th:href="@{/Website/Css/font-awesome.css}">
+    <link rel="stylesheet" th:href="@{/Website/Css/jquery.fancybox.min.css}">
+    <link rel="stylesheet" th:href="@{/Website/Css/magnific-popup.min.css}">
+    <link rel="stylesheet" th:href="@{/Website/Css/owl-carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/Website/Css/slicknav.min.css}">
+    <link rel="stylesheet" th:href="@{/Website/Css/style.css}">
+
+    <!-- Bizwheel Stylesheet -->
+    <link rel="stylesheet" th:href="@{/Website/Css/reset.css}">
+    <link rel="stylesheet" th:href="@{/Website/Css/responsive.css}">
+
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body id="bg">
+
+<!-- Boxed Layout -->
+<div id="page" class="site boxed-layout">
+
+    <!-- Preloader -->
+    <div class="preeloader">
+        <div class="preloader-spinner"></div>
+    </div>
+
+    <div th:replace="/Component/Website/header.html:: header"></div>
+    <!--/ End Preloader -->
+    <div class="container py-5" style="text-align: center">
+
+        <main class="w-25 m-auto my-3">
+            <form th:method="post" th:object="${staff}">
+                <h1 class="h3 mb-3 fw-normal">Đăng kí admin</h1>
+                <div class="form-group">
+                    <label style="float: left">Email</label>
+                    <input type="email" class="form-control" th:name="email">
+                </div>
+                <div class="form-group">
+                    <label style="float: left">Họ tên</label>
+                    <input type="text" class="form-control" th:name="name">
+                </div>
+                <div class="form-group">
+                    <label style="float: left">Password</label>
+                    <input type="password" class="form-control" th:name="password">
+                </div>
+
+                <div class="form-group">
+                    <label style="float: left">Nhập lại Password</label>
+                    <input type="password" class="form-control" value="${bean.password}" name="repassword">
+                </div>
+                <div class="checkbox mb-3">
+                    <label style="float: left">
+                        <a style="color: blue" th:href="@{/signup}">Đăng ký khách hàng</a>
+                    </label>
+                </div>
+                <br>
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Đăng kí</button>
+                <div class="checkbox mb-3">
+                    <br>
+                    <label style="float: left">
+                        Đã có tài khoản? <a style="color: red"/>">Đăng nhập</a>
+                    </label>
+                </div>
+            </form>
+        </main>
+    </div>
+
+
+    <div th:replace="/Component/Website/footer.html:: footer"></div>
+
+
+</div>
+
+<!-- Jquery JS -->
+<script th:src="@{/Website/js/jquery.min.js}"></script>
+<script th:src="@{/Website/js/jquery-migrate-3.0.0.js}"></script>
+<!-- Popper JS -->
+<script th:src="@{/Website/js/popper.min.js}"></script>
+<!-- Bootstrap JS -->
+<script th:src="@{/Website/js/bootstrap.min.js}"></script>
+<!-- Modernizr JS -->
+<script th:src="@{/Website/js/modernizr.min.js}"></script>
+<!-- ScrollUp JS -->
+<script th:src="@{/Website/js/scrollup.js}"></script>
+<!-- FacnyBox JS -->
+<script th:src="@{/Website/js/jquery-fancybox.min.js}"></script>
+<!-- Cube Portfolio JS -->
+<script th:src="@{/Website/js/cubeportfolio.min.js}"></script>
+<!-- Slick Nav JS -->
+<script th:src="@{/Website/js/slicknav.min.js}"></script>
+<!-- Slick Nav JS -->
+<script th:src="@{/Website/js/slicknav.min.js}"></script>
+<!-- Slick Slider JS -->
+<script th:src="@{/Website/js/owl-carousel.min.js}"></script>
+<!-- Easing JS -->
+<script th:src="@{/Website/js/easing.js}"></script>
+<!-- Magnipic Popup JS -->
+<script th:src="@{/Website/js/magnific-popup.min.js}"></script>
+<!-- Active JS -->
+<script th:src="@{/Website/js/active.js}"></script>
+</body>
+</html>

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @MultipartConfig
 @Controller
@@ -34,7 +35,8 @@ public class Admin {
     @Autowired
     Product product;
     List<Product> productList = new ArrayList<>();
-    Category category = new Category();
+    @Autowired
+    Category category;
 
     @GetMapping("/dashboard")
     public String getDashboard() {
@@ -67,19 +69,22 @@ public class Admin {
 
     @PostMapping("/product/save")
     public String postNewProduct(@Valid @ModelAttribute("product") Product product, BindingResult errors,
-                                 @RequestParam("fileimage") MultipartFile file) {
+                                 @RequestParam("fileimage") MultipartFile file,Model model) {
         if (errors.hasErrors()) {
             System.out.println(errors.getFieldErrors().get(0).getDefaultMessage() + "chay den day");
             return "/Template/Admin/newProduct";
         } else {
             try {
                 helper.saveFile(file, "D:\\Study\\Ki 6\\Java 5\\Shopdongho\\Assignment\\src\\main\\resources\\static\\file");
-                product.setImage(file.getOriginalFilename());
+                if (!file.getOriginalFilename().isEmpty()){
+                    product.setImage(file.getOriginalFilename());
+                }
                 productDAO.save(product);
                 System.out.println("del lỗi gì");
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            model.addAttribute("category",product.getCategory());
             return "redirect:/admin/product/read?success=true";
         }
     }

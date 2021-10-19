@@ -22,4 +22,7 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
 
     @Query(value = "select p from Product p where p.category.id = :category")
     List<Product> findByCategoryandLimit(@Param("category") int category, Pageable pageable);
+
+    @Query(value = "select p from Product p")
+    List<Product> findLimit(Pageable pageable);
 }

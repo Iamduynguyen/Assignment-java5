@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -42,11 +44,24 @@ public class Service {
     @Autowired
     HttpSession session;
     List<Product> _productList = new ArrayList<>();
+    int _page = 0;
 
-    @GetMapping("/a")
-    public String getService(Model model) {
-        Pageable pageable = PageRequest.of(0, 2);
-        _productList = productDAO.findByCategoryandLimit(1, pageable);
+    @RequestMapping("/store")
+    public String getService(Model model, @RequestParam("cate") Integer idx,@RequestParam("page")String page) {
+        if (page!=null){
+            if (page.equals("next")){
+                _page++;
+            }else if (page.equals("prev")){
+                _page--;
+            }
+        }
+        System.out.println("alo");
+        Pageable pageable = PageRequest.of(_page, 6);
+        if (idx==null){
+            _productList = productDAO.findLimit(pageable);
+        }else {
+            _productList = productDAO.findByCategoryandLimit(idx, pageable);
+        }
         for (Product x : _productList) {
             System.out.println(x.getName());
         }
@@ -54,6 +69,13 @@ public class Service {
         System.out.println("alo");
         return "/Template/Website/service";
     }
+
+    @GetMapping("/store/product")
+    public String getServiceByproduct(){
+        return "";
+    }
+
+
 
 
 }

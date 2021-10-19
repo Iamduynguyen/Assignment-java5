@@ -50,7 +50,6 @@ public class Admin {
         productList = productDAO.findAll();
         model.addAttribute("index", 0);
         System.out.println("alo");
-        product.setName("abc");
         model.addAttribute("productList", productList);
         return "/Template/Admin/product";
     }
@@ -74,7 +73,7 @@ public class Admin {
             return "/Template/Admin/newProduct";
         } else {
             try {
-                helper.saveFile(file, "D:\\Study\\Ki 6\\Java 5\\Ass\\src\\main\\resources\\static\\file");
+                helper.saveFile(file, "D:\\Study\\Ki 6\\Java 5\\Shopdongho\\Assignment\\src\\main\\resources\\static\\file");
                 product.setImage(file.getOriginalFilename());
                 productDAO.save(product);
                 System.out.println("del lỗi gì");

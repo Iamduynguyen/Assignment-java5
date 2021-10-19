@@ -36,18 +36,16 @@
             <div class="col-md-12 my-1">
                 <table class="table table-warning table-hover table-sm">
                     <tr style="background-color: deeppink">
-                        <th style="color: white">STT</th>
                         <th style="color: white">Tên sản phẩm</th>
                         <th style="color: white">Hình ảnh</th>
                         <th style="color: white">Giá gốc</th>
                         <th style="color: white">Khuyến mại</th>
                         <th style="color: white">Lượt xem</th>
                         <th style="color: white">Lượt mua</th>
-                        <th style="background-color: greenyellow;text-align: center"><a>Tạo mới</a></th>
+                        <th style="background-color: greenyellow;text-align: center"><a th:href ="@{/admin/product/save}">Tạo mới</a></th>
                     </tr>
                     <tbody>
                     <tr th:each="product:${productList}">
-                        <td th:utext="${product.id}"></td>
                         <td th:utext="${product.name}"></td>
                         <td><img th:src="@{'http://localhost:8080/file/'+${product.image}}" height="80px"/></td>
                         <td th:utext="${product.price}"></td>

@@ -3,12 +3,14 @@ package com.example.assignment.module;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Component
 @Entity
 public class Oderdetall {
     @Id
@@ -23,4 +25,8 @@ public class Oderdetall {
     @ManyToOne
     @JoinColumn(name = "product")
     private Product product;
+
+    public int getAmount(Product product){
+        return (product.getPrice()-product.getDiscount())*quantity;
+    }
 }

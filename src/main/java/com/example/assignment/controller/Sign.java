@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -45,6 +46,7 @@ public class Sign {
     List<Product> productList = new ArrayList<>();
     Category category = new Category();
     List<Staff> staffList = new ArrayList<>();
+    List<Customer> customerList = new ArrayList<>();
 
     @GetMapping("/sign")
     public String getSign(Model model) {
@@ -54,14 +56,23 @@ public class Sign {
     }
 
     @PostMapping("/sign")
-    public String postSign() {
+    public String postSign(@RequestParam("email")String email,@RequestParam("password") String password) {
         staffList = staffDAO.findAll();
-        for (Staff x : staffList) {
-            if (x.getEmail().equals(req.getParameter("email")) &&
-                    x.getPassword().equals(req.getParameter("password"))) {
-                _staff = x;
-                session.setAttribute("staff", _staff);
-                return "redirect:/admin/dashboard";
+        if (req.getParameter("admin")!=null){
+            for (Staff x : staffList) {
+                if (x.getEmail().equals(email) && x.getPassword().equals(password)) {
+                    _staff = x;
+                    session.setAttribute("staff", _staff);
+                    return "redirect:/admin/dashboard";
+                }
+            }
+        }else {
+            for (Customer x : customerList) {
+                if (x.getEmail().equals(email) && x.getPassword().equals(password)) {
+                    customer = x;
+                    session.setAttribute("customer", customer);
+                    return "redirect:/admin/dashboard";
+                }
             }
         }
         return "/Template/Website/signin";

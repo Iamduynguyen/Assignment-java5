@@ -23,8 +23,8 @@ public class Product {
     @NotEmpty
     private String name;
     @NotNull
-    private double price;
-    private double discount;
+    private int price;
+    private int discount;
     private int view;
     private int sold;
     @NotNull

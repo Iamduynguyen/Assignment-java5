@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Meta Tag -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name='copyright' content='pavilan'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Title Tag  -->
+  <title>Bizwheel - Multipurpose Business & Digital Agency Html5 Template</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/favicon.png" href="img/favicon.png">
+
+  <!-- Web Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+  <!-- Bizwheel Plugins CSS -->
+
+  <link rel="stylesheet" th:href="@{/Website/Css/animate.min.css}">
+  <link rel="stylesheet" th:href="@{/Website/Css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/Website/Css/cubeportfolio.min.css}">
+  <link rel="stylesheet" th:href="@{/Website/Css/font-awesome.css}">
+  <link rel="stylesheet" th:href="@{/Website/Css/jquery.fancybox.min.css}">
+  <link rel="stylesheet" th:href="@{/Website/Css/magnific-popup.min.css}">
+  <link rel="stylesheet" th:href="@{/Website/Css/owl-carousel.min.css}">
+  <link rel="stylesheet" th:href="@{/Website/Css/slicknav.min.css}">
+  <link rel="stylesheet" th:href="@{/Website/Css/style.css}">
+
+  <!-- Bizwheel Stylesheet -->
+  <link rel="stylesheet" th:href="@{/Website/Css/reset.css}">
+  <link rel="stylesheet" th:href="@{/Website/Css/responsive.css}">
+
+
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+</head>
+<body id="bg">
+
+<div class="container">
+  <div class="row mx-auto my-4">
+    <div class="col-md-8 rounded" style="background-color: lavender">
+      <table class="table-striped table-hover">
+        <tr class="py-3 px-3">
+          <th>
+            <label class="my-auto">Sản phẩm</label>
+          </th>
+          <th>
+            Hình ảnh
+          </th>
+          <th>
+            Đơn giá
+          </th>
+          <th>
+            Số lượng
+          </th>
+          <th>
+            Thành tiền
+          </th>
+          <th>
+            Xóa
+          </th>
+        </tr>
+        <tbody>
+        <tr  class="py-3 px-3">
+          <td ></td>
+          <td>
+            <img width="100px" src="<c:url value="/image/${item.product.img1}"/>">
+          </td>
+          <td>
+            ${item.product.price- item.product.discount}
+          </td>
+          <td>
+            ${item.quanlity}
+          </td>
+          <td>
+            ${item.amout}
+          </td>
+          <td>
+            <a href="/mycart?id_oder=${item.id}"/>">
+            <img width="20px" src="https://image.flaticon.com/icons/png/512/39/39220.png"></a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-4">
+      <div style="background-color: lavender" class="mx-2 mb-3 py-2 rounded">
+        <div class="mx-4 row">
+          <label class="fw-bold col-md-8">Khuyến mại của bạn</label>
+          <a class="col-md-3">Hủy</a>
+        </div>
+        <div class="mx-4" style="height: 60px;overflow-x:hidden">
+          <c:forEach var="item" items="${lstvoucher}">
+            <div class="row">
+              <label style="color: green" class="col-md-7">Giảm ${item.sale} Vnd</label>
+              <a style="color: red" class="col-md-5">Áp dụng</a>
+            </div>
+          </c:forEach>
+        </div>
+      </div>
+      <form method="post">
+        <div class="mx-2 py-3 rounded" style="background-color: lavender">
+          <div class="row mx-2">
+            <label class="col">Giao tới</label>
+            <a  class="col" style="float: right">Thay đổi</a>
+          </div>
+          <div class="row mx-2">
+            <label class="col fw-bold">${customer.name}</label>
+            <label class="col fw-bold">${customer.phone}</label>
+          </div>
+          <p class="mx-4 mb-2 fw-bold">${customer.address}</p>
+        </div>
+
+        <div style="background-color: lavender" class="mx-2 my-3 py-3 rounded">
+          <div class="mx-4 row">
+            <label class="col fw-bold">Tạm tính</label>
+            <label class="col ">${temp} vnd</label>
+          </div>
+          <div class="mx-4 row">
+            <label class="col fw-bold">Giảm giá</label>
+            <label class="col">${sale} vnd</label>
+          </div>
+          <div class="mx-4 row">
+            <label class="col fw-bold">Tổng cộng</label>
+            <label class="col">${amounttotal} vnd</label>
+          </div>
+        </div>
+        <button type="submit" name="tranID" value="${tranID}" class="rounded col-md-11 mx-3 py-3"
+                style="background-color: #ff0080">Mua hàng
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div th:replace="/Component/Website/footer.html:: footer"></div>
+
+
+</div>
+
+<!-- Jquery JS -->
+<script th:src="@{/Website/js/jquery.min.js}"></script>
+<script th:src="@{/Website/js/jquery-migrate-3.0.0.js}"></script>
+<!-- Popper JS -->
+<script th:src="@{/Website/js/popper.min.js}"></script>
+<!-- Bootstrap JS -->
+<script th:src="@{/Website/js/bootstrap.min.js}"></script>
+<!-- Modernizr JS -->
+<script th:src="@{/Website/js/modernizr.min.js}"></script>
+<!-- ScrollUp JS -->
+<script th:src="@{/Website/js/scrollup.js}"></script>
+<!-- FacnyBox JS -->
+<script th:src="@{/Website/js/jquery-fancybox.min.js}"></script>
+<!-- Cube Portfolio JS -->
+<script th:src="@{/Website/js/cubeportfolio.min.js}"></script>
+<!-- Slick Nav JS -->
+<script th:src="@{/Website/js/slicknav.min.js}"></script>
+<!-- Slick Nav JS -->
+<script th:src="@{/Website/js/slicknav.min.js}"></script>
+<!-- Slick Slider JS -->
+<script th:src="@{/Website/js/owl-carousel.min.js}"></script>
+<!-- Easing JS -->
+<script th:src="@{/Website/js/easing.js}"></script>
+<!-- Magnipic Popup JS -->
+<script th:src="@{/Website/js/magnific-popup.min.js}"></script>
+<!-- Active JS -->
+<script th:src="@{/Website/js/active.js}"></script>
+</body>
+</html>

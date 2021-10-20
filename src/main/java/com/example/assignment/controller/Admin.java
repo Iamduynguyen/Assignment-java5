@@ -62,13 +62,15 @@ public class Admin {
         if (req.getParameter("id") != null) {
             int id = Integer.parseInt(req.getParameter("id"));
             product = productDAO.findById(id).get();
+        }else {
+            product = new Product();
         }
         model.addAttribute("product", product);
         return "/Template/Admin/newProduct";
     }
 
     @PostMapping("/product/save")
-    public String postNewProduct(@Valid @ModelAttribute("product") Product product, BindingResult errors,
+    public String postNewProduct(@Valid @ModelAttribute("product") Product newproduct, BindingResult errors,
                                  @RequestParam("fileimage") MultipartFile file,Model model) {
         if (errors.hasErrors()) {
             System.out.println(errors.getFieldErrors().get(0).getDefaultMessage() + "chay den day");
@@ -77,9 +79,13 @@ public class Admin {
             try {
                 helper.saveFile(file, "D:\\Study\\Ki 6\\Java 5\\Shopdongho\\Assignment\\src\\main\\resources\\static\\file");
                 if (!file.getOriginalFilename().isEmpty()){
-                    product.setImage(file.getOriginalFilename());
+                    newproduct.setImage(file.getOriginalFilename());
+                    System.out.println("sao"+file.getOriginalFilename());
+                }else {
+                    newproduct.setImage(product.getImage());
+                    System.out.println(product.getImage());
                 }
-                productDAO.save(product);
+                productDAO.save(newproduct);
                 System.out.println("del lỗi gì");
             } catch (Exception e) {
                 e.printStackTrace();

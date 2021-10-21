@@ -18,13 +18,13 @@ public class HomePageController {
 
     @RequestMapping("/home")
     public String getHome(){
-        return "/Template/Website/signin";
+        return "/Template/Website/index";
     }
 
     @RequestMapping("/")
     public String getHomes(){
         Customer x = customerDAO.findById(1).get();
         session.setAttribute("customer",x);
-        return "/Template/Website/signin";
+        return "/Template/Website/index";
     }
 }

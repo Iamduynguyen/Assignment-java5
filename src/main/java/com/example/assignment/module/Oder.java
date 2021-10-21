@@ -20,7 +20,7 @@ public class Oder {
     private int id;
     private int status;
     private Date created;
-    private int amouttotal;
+    private int amounttotal;
     @ManyToOne
     @JoinColumn(name = "staff")
     private Staff staff;
@@ -35,7 +35,7 @@ public class Oder {
     public int getAmouttotals(List<Oderdetall> lstOder) {
         int total = 0;
         for (Oderdetall x: lstOder){
-            total += x.getAmount(x.getProduct());
+            total += x.getAmount();
         }
         return total;
     }

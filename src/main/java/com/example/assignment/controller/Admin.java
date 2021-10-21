@@ -2,11 +2,14 @@ package com.example.assignment.controller;
 
 
 import com.example.assignment.DAO.CategoryDAO;
+import com.example.assignment.DAO.Oderdao;
+import com.example.assignment.DAO.OderdetallDao;
 import com.example.assignment.DAO.ProductDAO;
 import com.example.assignment.Helper.HelperCtrl;
-import com.example.assignment.module.Category;
-import com.example.assignment.module.Product;
+import com.example.assignment.module.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,6 +40,19 @@ public class Admin {
     List<Product> productList = new ArrayList<>();
     @Autowired
     Category category;
+    @Autowired
+    Customer customer;
+    @Autowired
+    Oderdao oderdao;
+    @Autowired
+    Oder oder;
+    @Autowired
+    Oderdetall oderdetall;
+    @Autowired
+    OderdetallDao oderdetallDao;
+    int page =0;
+
+    List<Oderdetall> oderdetalls = new ArrayList<>();
 
     @GetMapping("/dashboard")
     public String getDashboard() {
@@ -44,18 +60,33 @@ public class Admin {
     }
 
     @GetMapping("/product/read")
-    public String readProduct(Model model) {
+    public String readProduct(Model model,@RequestParam("category") int categoryId) {
         if (req.getParameter("delete") != null) {
             int id = Integer.parseInt(req.getParameter("delete"));
             productDAO.deleteById(id);
         }
-        productList = productDAO.findAll();
-        model.addAttribute("index", 0);
-        System.out.println("alo");
+        Pageable pageable = PageRequest.of(page, 6);
+        if (categoryId>0){
+            category = categoryDAO.findById(categoryId).get();
+            productList = productDAO.findByCategoryandLimit(categoryId,pageable);
+        }else {
+            productList = productDAO.findLimit(pageable);
+        }
+        if (req.getParameter("key")!=null){
+            productList = productDAO.findByName(req.getParameter("key"),pageable);
+        }
+        model.addAttribute("category",category);
+        model.addAttribute("page",page);
         model.addAttribute("productList", productList);
         return "/Template/Admin/product";
     }
 
+
+    @GetMapping ("/delete{id}")
+    public String deleteproduct(@RequestParam("id") int id){
+        productDAO.deleteById(id);
+        return "redirect:/admin/product/read?category="+0;
+    }
 
     @GetMapping("/product/save")
     public String getNewProduct(Model model) {
@@ -91,7 +122,7 @@ public class Admin {
                 e.printStackTrace();
             }
             model.addAttribute("category",product.getCategory());
-            return "redirect:/admin/product/read?success=true";
+            return "redirect:/admin/product/read?category=0";
         }
     }
 
@@ -118,6 +149,51 @@ public class Admin {
     public List<Category> getCategories() {
         List<Category> categoryList = categoryDAO.findAll();
         return categoryList;
+    }
+
+    @GetMapping("/oderwaiting")
+    public String getOdwaiting(Model model){
+        List<Oder> oders = oderdao.getWaiting(1);
+        model.addAttribute("oders",oders);
+        System.out.println("alo");
+        return "/Template/Admin/odwaiting";
+    }
+
+    @GetMapping("/detailsorder{id}")
+    public String getDetailsOrder(Model model,@RequestParam("id") int id){
+        oder = oderdao.findById(id).get();
+        oderdetalls  = oderdetallDao.getOderdetallsByOder(oder);
+        model.addAttribute("oder",oder);
+        model.addAttribute("oddetails",oderdetalls);
+        return "/Template/Admin/DeltailsOD";
+    }
+
+    @GetMapping("/detailsorder/confirm{cf}")
+    public String getDetailsOrder(@RequestParam("cf") int cf){
+        if (cf==1){
+            oder.setStatus(2);
+            for (Oderdetall oderdetall:oderdetalls){
+                Product newproduct = oderdetall.getProduct();
+                newproduct.setQuantity(newproduct.getQuantity()-oderdetall.getQuantity());
+                productDAO.save(product);
+            }
+            oderdao.save(oder);
+        }else if (cf==0){
+            oderdetallDao.deleteAll(oderdetalls);
+            oderdao.delete(oder);
+        }else if (cf==2){
+            oder.setStatus(3);
+            oderdao.save(oder);
+        }else if (cf==-1){
+            for (Oderdetall oderdetall:oderdetalls){
+                Product newproduct = oderdetall.getProduct();
+                newproduct.setQuantity(newproduct.getQuantity()+oderdetall.getQuantity());
+                productDAO.save(product);
+            }
+            oderdetallDao.deleteAll(oderdetalls);
+            oderdao.delete(oder);
+        }
+        return "redirect:/admin/oderwaiting";
     }
 
 }

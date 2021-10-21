@@ -17,7 +17,6 @@ public class Oderdetall {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int quantity;
-    private int amount;
     private boolean active;
     @ManyToOne
     @JoinColumn(name = "oder")
@@ -26,7 +25,7 @@ public class Oderdetall {
     @JoinColumn(name = "product")
     private Product product;
 
-    public int getAmount(Product product){
+    public int getAmount(){
         return (product.getPrice()-product.getDiscount())*quantity;
     }
 }

@@ -57,7 +57,9 @@ public class Sign {
 
     @PostMapping("/sign")
     public String postSign(@RequestParam("email")String email,@RequestParam("password") String password) {
+        System.out.println("alof");
         staffList = staffDAO.findAll();
+        customerList = customerDAO.findAll();
         if (req.getParameter("admin")!=null){
             for (Staff x : staffList) {
                 if (x.getEmail().equals(email) && x.getPassword().equals(password)) {
@@ -71,7 +73,8 @@ public class Sign {
                 if (x.getEmail().equals(email) && x.getPassword().equals(password)) {
                     customer = x;
                     session.setAttribute("customer", customer);
-                    return "redirect:/admin/dashboard";
+                    System.out.println(customer.getName());
+                    return "redirect:/store";
                 }
             }
         }

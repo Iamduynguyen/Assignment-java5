@@ -36,4 +36,8 @@ public class Product {
     private Category category;
     @OneToMany(mappedBy = "product")
     private List<Oderdetall> oderdetallList;
+
+    public int getrealprice(){
+        return price - discount;
+    }
 }

@@ -53,38 +53,42 @@
 
     <div th:replace="/Component/Website/header.html:: header"></div>
     <!--/ End Preloader -->
-    <div class="container py-5" style="text-align: center">
-
-        <main class="w-25 m-auto my-3">
-            <form action="" method="post">
-                <h1 class="h3 mb-3 fw-normal">Đăng nhập</h1>
-                <div class="form-group">
-                    <label style="float: left">Email address</label>
-                    <input type="text" class="form-control" name="email" value=""/>
+    <div class="container">
+        <div class=" mx-auto my-4 px-3 row">
+            <div class="col-md-12">
+                <div>
+                    <table class="table table-warning table-hover table-sm">
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên khách hàng</th>
+                            <th>Địa chỉ</th>
+                            <th>Số điện thoại</th>
+                            <th>Giá tiền</th>
+                            <th>Ngày mua</th>
+                            <th>Trạng thái</th>
+                            <th>Chi tiết</th>
+                        </tr>
+                        <tbody>
+                        <tr th:each="oder,state:${oders}">
+                            <td th:utext="${state.count}"></td>
+                            <td th:utext="${oder.getCustomer.getName()}"></td>
+                            <td th:utext="${oder.getCustomer.getAddress()}">${item.customerAddress}</td>
+                            <td th:utext="${oder.getCustomer.getPhone()}">${item.customerPhone}</td>
+                            <td th:utext="${oder.amounttotal}">${item.amouttotal}</td>
+                            <td th:utext="*{#dates.format(oder.getCreated(),'dd-MM-yyyy')}"></td>
+                            <td th:switch="${oder.getStatus()}">
+                                <label th:case="1">Chờ xác nhận</label>
+                                <label th:case="2" style="color: orangered">Đang giao hàng</label>
+                                <label th:case="3" style="color: blue">Đã nhận hàng</label>
+                            </td>
+                            <td><a th:href="@{'/oder?id='+${oder.getId()}}">Chia tiết</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="form-group">
-                    <label style="float: left">Password</label>
-                    <input type="password" class="form-control" name="password"/>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label class="row px-3" style="float: left">
-                        <input style="width: 25px;margin-right: 10px" type="checkbox" name="remember"> Remember me?
-                        <input style="width: 25px;margin-right: 10px;margin-left: 30px" type="checkbox"
-                               name="admin"> Admin?
-                    </label>
-                </div>
-                <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-                <div class="checkbox mb-3 ">
-                    <br>
-                    <label style="float: left">
-                        Chưa có tài khoản? <a style="color: red" href="/signup">Đăng ký</a>
-                    </label>
-                </div>
-            </form>
-        </main>
+            </div>
+        </div>
     </div>
-
 
     <div th:replace="/Component/Website/footer.html:: footer"></div>
 

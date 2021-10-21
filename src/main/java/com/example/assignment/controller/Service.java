@@ -58,7 +58,8 @@ public class Service {
         String page = req.getParameter("page");
         int idx = 0;
         if (req.getParameter("category")!=null){
-           idx = Integer.parseInt(req.getParameter("cate"));
+            System.out.println("alo");
+           idx = Integer.parseInt(req.getParameter("category"));
         }
             if (page!=null){
                 if (page.equals("next")){
@@ -98,21 +99,27 @@ public class Service {
             return "redirect:/sign?erorr=Dang nhap di";
         }
         customer = (Customer) session.getAttribute("customer");
-        if (oderdao.getOderByCustomer(customer)==null){
+        if (oderdao.getOderByCustomer(customer)==null){ //toi tim 1 oder theo khach hang neu k co thi tao moi
             oder.setStaff(staffDAO.findById(1).get());
             oder.setCustomer(customer);
             oderdao.save(oder);
-        }else {
+        }else { // co rôi thi lay luon
             oder = oderdao.getOderByCustomer(customer);
-        }
-        oderdetall.setOder(oder);
-        oderdetall.setProduct(product);
-        oderdetall.setActive(true);
-        oderdetall.setQuantity(quantity);
-        oderdetallDao.save(oderdetall);
-        return "redirect:/";
+        } //tao oderdetall va add oder va add san pham
+        oderdetall.setOder(oder); // oderdetall add oder
+        oderdetall.setProduct(product); //oderdetall add product
+        oderdetall.setActive(true); //cai nay can cung dc
+        oderdetall.setQuantity(quantity); //add so luong cua khach hang
+        oderdetallDao.save(oderdetall); //roi luu lai
+        return "redirect:/myacount/cart";
     }
 
-
+    @GetMapping("/bought")
+    public String getdamuas(Model model){
+        customer = customerDAO.findById(1).get();
+        List<Oder> oders = oderdao.getBought(customer);
+        model.addAttribute("oders",oders);
+        return "/Template/Website/ListOder";
+    }
 
 }

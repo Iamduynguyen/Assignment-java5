@@ -14,4 +14,7 @@ public interface OderdetallDao extends JpaRepository<Oderdetall,Integer> {
 
     @Query(value = "select o from  Oderdetall o where o.oder = :oder")
     public List<Oderdetall> getOderdetallsByOder(@Param("oder")Oder oder);
+
+    @Query(value = "delete from Oderdetall o where o.id= :id")
+    public List<Oderdetall> deleteOderdetallById(@Param("id")int id);
 }

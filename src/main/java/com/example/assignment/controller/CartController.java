@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/myaccount")
-public class CustomerAccountController {
+public class CartController {
     
 
     @GetMapping("/infor")

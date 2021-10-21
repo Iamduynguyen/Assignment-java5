@@ -48,9 +48,6 @@
                                     <div class="logo">
                                         <!-- Image Logo -->
                                         <div class="img-logo">
-                                            <a href="<c:url value="/signin"/>">
-                                            <img src="<c:url value="/Img/logo.png"/>" alt="#">
-                                            </a>
                                         </div>
                                     </div>
                                     <div class="mobile-nav"></div>
@@ -65,14 +62,18 @@
                                                         <!-- Naviagiton -->
                                                         <ul id="nav" class="nav main-menu menu navbar-nav">
                                                             <li><a th:href="@{/home}">Trang chủ</a></li>
-                                                            <li class="icon-active"><a href="#">Dịch vụ</a>
+                                                            <li class="icon-active"><a href="#">Sản phẩm</a>
                                                                 <ul class="sub-menu">
-                                                                    <!--                                                                    <li th:each = "cate,${categoryList}"><a th:href="@{'http://localhost:8080/service?category='+${cate.id}}" th:utext="${cate.name}"></a></li>-->
+                                                                    <li> <a href="/store?category=1">Đồng hồ cao cấp</a></li>
+                                                                    <li> <a href="/store?category=2">Đồng hồ thời trang</a></li>
+                                                                    <li> <a href="/store?category=3">Đồng hồ thể thao</a></li>
                                                                 </ul>
                                                             </li>
                                                             <li><a href="">Diễn đàn</a></li>
                                                             <li class="icon-active"><a href="#">Tài khoản của bạn</a>
                                                                 <ul class="sub-menu">
+                                                                    <li> <a href="/myacount/cart">Giỏ hàng</a></li>
+                                                                    <li> <a href="/mybought">Đơn hàng</a></li>
                                                                 </ul>
                                                             </li>
                                                             <li class="icon-active"><a href="#">Ngôn ngữ</a>

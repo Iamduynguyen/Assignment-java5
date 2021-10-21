@@ -6,12 +6,12 @@ import com.example.assignment.module.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -47,23 +47,45 @@ public class AcountController {
     @Autowired
     OderdetallDao oderdetallDao;
     List<Oderdetall> oderdetalls = new ArrayList<>();
+    int sale = 0;
+
 
     @GetMapping("/cart")
-    public String getCart(Model model){
+    public String getCart(Model model, @ModelAttribute("customer")Customer customer){
         customer = customerDAO.findById(1).get();
+        if (req.getParameter("delete")!=null){
+            int oderdtID = Integer.parseInt(req.getParameter("delete"));
+            Oderdetall oderdetalls = oderdetallDao.findById(oderdtID).get();
+            oderdetallDao.delete(oderdetalls);
+        }
         if (oderdao.getOderByCustomer(customer)==null){
-            oder.setStaff(staffDAO.findById(1).get());
-            oder.setCustomer(customer);
-            oderdao.save(oder);
+            Oder newoder = new Oder();
+            newoder.setStaff(staffDAO.findById(1).get());
+            newoder.setCustomer(customer);
+            newoder.setStatus(0);
+            oderdao.save(newoder);
         }else {
             oder = oderdao.getOderByCustomer(customer);
         }
-        model.addAttribute("oder",oder.getLstOder());
         oderdetalls = oderdetallDao.getOderdetallsByOder(oder);
-        for (Oderdetall x:oderdetalls){
-            System.out.println(x.getProduct().getName());
-        }
+
+        model.addAttribute("sale",sale);
+        model.addAttribute("amount",oder.getAmouttotals(oderdetalls));
+        model.addAttribute("Amouttotals",oder.getAmouttotals(oderdetalls)-sale);
+        model.addAttribute("oderdetalls",oderdetalls);
         return "/Template/Website/Cart";
     }
+
+    @GetMapping("/cart/confirm")
+    public String getCart(){
+        oder.setCreated(new Date());
+        oder.setStatus(1);
+        oderdao.save(oder);
+        System.out.println("ok");
+        return "redirect:/myacount/cart";
+    }
+
+
+
 
 }

@@ -15,7 +15,7 @@ import java.util.List;
 public interface ProductDAO extends JpaRepository<Product, Integer> {
 
     @Query(value = "select p from Product p where p.name like %:name%")
-    List<Product> findByName(@Param("name") String name);
+    List<Product> findByName(@Param("name") String name, Pageable pageable);
 
     @Query(value = "select p from Product p where p.category = :category")
     List<Product> findByCategory(@Param("category") Category category);

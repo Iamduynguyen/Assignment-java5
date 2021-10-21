@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Meta Tag -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name='copyright' content='pavilan'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Title Tag  -->
+  <title>Bizwheel - Multipurpose Business & Digital Agency Html5 Template</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/favicon.png" href="img/favicon.png">
+
+  <!-- Web Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+  <!-- Bizwheel Plugins CSS -->
+
+  <link rel="stylesheet" th:href="@{Website/css/animate.min.css}">
+  <link rel="stylesheet" th:href="@{Website/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{Website/css/cubeportfolio.min.css}">
+  <link rel="stylesheet" th:href="@{Website/css/font-awesome.css}">
+  <link rel="stylesheet" th:href="@{Website/css/jquery.fancybox.min.css}">
+  <link rel="stylesheet" th:href="@{Website/css/magnific-popup.min.css}">
+  <link rel="stylesheet" th:href="@{Website/css/owl-carousel.min.css}">
+  <link rel="stylesheet" th:href="@{Website/Css/slicknav.min.css}">
+  <link rel="stylesheet" th:href="@{Website/css/style.css}">
+
+  <!-- Bizwheel Stylesheet -->
+  <link rel="stylesheet" th:href="@{/Website/Css/reset.css}">
+  <link rel="stylesheet" th:href="@{/Website/Css/responsive.css}">
+
+
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+</head>
+<body id="bg">
+
+<!-- Boxed Layout -->
+<div id="page" class="site boxed-layout">
+
+  <!-- Preloader -->
+  <div class="preeloader">
+    <div class="preloader-spinner"></div>
+  </div>
+
+  <div th:replace="/Component/Website/header.html:: header"></div>
+  <!--/ End Preloader -->
+  <div class="container">
+    <div class=" mx-auto my-4 px-3 row">
+      <div class="col-md-12">
+        <div class="content mx-2 my-5 py-3 row">
+          <div class="col row rounded" style="background-color: white">
+            <div th:each="oderdeltall:${oderdetalls}" class="col mx-2 rounded px-1 py-1 mx-3 my-3" style="width: 120px;height: 150px">
+              <a href="">
+              <div class="row">
+                <img width="100" th:src="@{'http://localhost:8080/file/'+${oderdeltall.getProduct().getImage()}}"/>
+              </div>
+              <div>
+                <p th:utext="${oderdeltall.getProduct().getName()}" style="color: #ff0080"></p>
+                <p th:utext="${oderdeltall.getProduct().getrealprice()}" style="color: blue"></p>
+                <p th:utext="${oderdeltall.getQuantity()}" style="color: blue">Số lượng :${pro.quanlity}</p>
+              </div>
+              </a>
+            </div>
+          </div>
+          <div class="col rounded" style="background-color: white">
+              <div class="row form-group">
+                <label class="col-md-4">Khách hàng</label>
+                <label th:utext="${oder.getCustomer().getName()}" class="col-md-8">${trans.customerName}</label>
+              </div>
+              <div class="row form-group">
+                <label class="col-md-4">Địa chỉ</label>
+                <label th:utext="${oder.getCustomer().getAddress()}" class="col-md-8">${trans.customerAddress}</label>
+              </div>
+              <div class="row form-group">
+                <label class="col-md-4">Số điện thoại</label>
+                <label th:utext="${oder.getCustomer().getPhone()}" class="col-md-8">${trans.customerPhone}</label>
+              </div>
+              <div class="row form-group">
+                <label class="col-md-4">Giá tiền</label>
+                <label th:utext="${oder.getAmounttotal()}" class="col-md-8">${trans.amouttotal}</label>
+              </div>
+              <div class="row form-group">
+                <label class="col-md-4">Trạng thái</label>
+                <td th:switch="${oder.getStatus()}">
+                  <label th:case="1">Chờ xác nhận</label>
+                  <label th:case="2" style="color: orangered">Đang giao hàng</label>
+                  <label th:case="3" style="color: blue">Đã nhận hàng</label>
+                </td>
+              </div>
+              <div class="row form-group">
+                <a th:if="${oder.getStatus()==1}" th:href="@{/oder/confirm?remove=false}">
+                  Hủy
+                </a>
+                <a th:if="${oder.getStatus()==2}" th:href="@{/oder/confirm?remove=true}">
+                  Đã nhận
+                </a>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div th:replace="/Component/Website/footer.html:: footer"></div>
+
+
+</div>
+
+<!-- Jquery JS -->
+<script th:src="@{/Website/js/jquery.min.js}"></script>
+<script th:src="@{/Website/js/jquery-migrate-3.0.0.js}"></script>
+<!-- Popper JS -->
+<script th:src="@{/Website/js/popper.min.js}"></script>
+<!-- Bootstrap JS -->
+<script th:src="@{/Website/js/bootstrap.min.js}"></script>
+<!-- Modernizr JS -->
+<script th:src="@{/Website/js/modernizr.min.js}"></script>
+<!-- ScrollUp JS -->
+<script th:src="@{/Website/js/scrollup.js}"></script>
+<!-- FacnyBox JS -->
+<script th:src="@{/Website/js/jquery-fancybox.min.js}"></script>
+<!-- Cube Portfolio JS -->
+<script th:src="@{/Website/js/cubeportfolio.min.js}"></script>
+<!-- Slick Nav JS -->
+<script th:src="@{/Website/js/slicknav.min.js}"></script>
+<!-- Slick Nav JS -->
+<script th:src="@{/Website/js/slicknav.min.js}"></script>
+<!-- Slick Slider JS -->
+<script th:src="@{/Website/js/owl-carousel.min.js}"></script>
+<!-- Easing JS -->
+<script th:src="@{/Website/js/easing.js}"></script>
+<!-- Magnipic Popup JS -->
+<script th:src="@{/Website/js/magnific-popup.min.js}"></script>
+<!-- Active JS -->
+<script th:src="@{/Website/js/active.js}"></script>
+</body>
+</html>

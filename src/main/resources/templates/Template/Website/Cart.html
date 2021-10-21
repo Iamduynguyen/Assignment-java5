@@ -68,25 +68,19 @@
           </th>
         </tr>
         <tbody>
-        <tr  class="py-3 px-3">
-          <td ></td>
-          <td>
-            <img width="100px" src="<c:url value="/image/${item.product.img1}"/>">
-          </td>
-          <td>
-            ${item.product.price- item.product.discount}
-          </td>
-          <td>
-            ${item.quanlity}
-          </td>
-          <td>
-            ${item.amout}
-          </td>
-          <td>
-            <a href="/mycart?id_oder=${item.id}"/>">
-            <img width="20px" src="https://image.flaticon.com/icons/png/512/39/39220.png"></a>
-          </td>
-        </tr>
+          <tr th:each="oderdetall:${oderdetalls}" class="py-3 px-3">
+            <td th:utext="${oderdetall.product.name}" ></td>
+            <td>
+              <img width="100px" th:src="@{'http://localhost:8080/file/'+${oderdetall.product.image}}" />
+            </td>
+            <td th:utext="${oderdetall.product.getrealprice()}"></td>
+            <td th:utext="${oderdetall.quantity}"></td>
+            <td th:utext="${oderdetall.getAmount()}"></td>
+            <td>
+              <a th:href="@{'/myacount/cart?delete='+${oderdetall.id}}">
+              <img width="20px" th:src="@{https://image.flaticon.com/icons/png/512/39/39220.png}"></a>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -94,7 +88,7 @@
       <div style="background-color: lavender" class="mx-2 mb-3 py-2 rounded">
         <div class="mx-4 row">
           <label class="fw-bold col-md-8">Khuyến mại của bạn</label>
-          <a class="col-md-3">Hủy</a>
+          <a th:href="@{/myacount/cart}" class="col-md-3">Hủy</a>
         </div>
         <div class="mx-4" style="height: 60px;overflow-x:hidden">
           <c:forEach var="item" items="${lstvoucher}">
@@ -112,29 +106,30 @@
             <a  class="col" style="float: right">Thay đổi</a>
           </div>
           <div class="row mx-2">
-            <label class="col fw-bold">${customer.name}</label>
-            <label class="col fw-bold">${customer.phone}</label>
+            <label class="col fw-bold">[[${customer.name}]]</label>
+            <label class="col fw-bold">[[${customer.phone}]]</label>
           </div>
-          <p class="mx-4 mb-2 fw-bold">${customer.address}</p>
+          <p class="mx-4 mb-2 fw-bold">[[${customer.address}]]</p>
         </div>
 
         <div style="background-color: lavender" class="mx-2 my-3 py-3 rounded">
           <div class="mx-4 row">
             <label class="col fw-bold">Tạm tính</label>
-            <label class="col ">${temp} vnd</label>
+            <label class="col ">[[${amount}]] vnd</label>
           </div>
           <div class="mx-4 row">
             <label class="col fw-bold">Giảm giá</label>
-            <label class="col">${sale} vnd</label>
+            <label class="col">[[${sale}]] vnd</label>
           </div>
           <div class="mx-4 row">
             <label class="col fw-bold">Tổng cộng</label>
-            <label class="col">${amounttotal} vnd</label>
+            <label class="col">[[${Amouttotals}]] vnd</label>
           </div>
         </div>
-        <button type="submit" name="tranID" value="${tranID}" class="rounded col-md-11 mx-3 py-3"
-                style="background-color: #ff0080">Mua hàng
-        </button>
+        <a th:href="@{/myacount/cart/confirm}">
+          <button type="button" name="confirm" value="1" class="rounded col-md-11 mx-3 py-3"
+                  style="background-color: #ff0080">Mua hàng</button>
+        </a>
       </form>
     </div>
   </div>
